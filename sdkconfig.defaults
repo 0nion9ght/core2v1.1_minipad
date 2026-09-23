@@ -1,0 +1,49 @@
+##
+## Reproducible configuration for Core2v1.1_tokenpad (M5Stack Core2 v1.1).
+## This file is only applied when sdkconfig is (re)generated; to force a reapply:
+##   idf.py fullclean  (and delete sdkconfig if you want a from-scratch config)
+##
+
+## ---- Target / flash (M5Core2: ESP32, 16MB flash) ----
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+# CONFIG_ESPTOOLPY_FLASHSIZE_2MB is not set
+# CONFIG_ESPTOOLPY_FLASHSIZE_4MB is not set
+# CONFIG_ESPTOOLPY_FLASHSIZE_8MB is not set
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+## ---- PSRAM (M5Core2: 8MB quad PSRAM) ----
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_QUAD=y
+CONFIG_SPIRAM_SPEED_80M=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_MALLOC_ALWAYSINTERNAL=4096
+
+## ---- LVGL rendering ----
+## Default refresh period 33ms -> 16ms: the pull-down animation refreshes at up to
+## ~60Hz instead of ~30Hz. The panel SPI (40MHz) is the real ceiling for full-screen
+## updates, so this mainly smooths the tray animation.
+CONFIG_LV_DEF_REFR_PERIOD=16
+
+## ---- IRAM budget ----
+## Wi-Fi RX IRAM optimisation is disabled: with M5GFX + LVGL + console already in
+## IRAM, enabling it overflows iram0_0_seg on this chip (ESP-IDF's own default is
+## 'n' for BT+PSRAM on esp32). Saves >17KB IRAM; Wi-Fi RX throughput drops, which
+## is irrelevant for NTP time sync.
+# CONFIG_ESP_WIFI_RX_IRAM_OPT is not set
+
+## ---- Partition table: single 4MB factory app, no OTA (see partitions.csv) ----
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+# CONFIG_PARTITION_TABLE_SINGLE_APP is not set
+# CONFIG_PARTITION_TABLE_TWO_OTA is not set
+
+## ---- LVGL fonts ----
+## The clock page uses the project's own Bebas Neue font at size 176
+## (components/gui/fonts/bebas_neue_176.c); Montserrat 48 is no longer needed.
+# CONFIG_LV_FONT_MONTSERRAT_48 is not set
+
+## ---- Wi-Fi credentials (SNTP time sync) ----
+## TODO: fill in your own credentials here, then delete sdkconfig and rebuild
+## (or run `idf.py save-defconfig`) so they land in sdkconfig.
+CONFIG_APP_WIFI_SSID=""
+CONFIG_APP_WIFI_PASSWORD=""

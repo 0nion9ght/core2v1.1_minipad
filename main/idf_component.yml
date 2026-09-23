@@ -1,0 +1,7 @@
+## IDF Component Manager Manifest File
+## All third-party libraries are vendored under external/ (see root CMakeLists.txt
+## EXTRA_COMPONENT_DIRS). Do not add registry dependencies here - they would be
+## re-downloaded into managed_components/ on the next build.
+dependencies:
+  idf:
+    version: '>=5.2'

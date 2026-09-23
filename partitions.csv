@@ -1,0 +1,13 @@
+# Partition table for Core2v1.1_tokenpad (M5Stack Core2 v1.1, 16MB flash, no OTA).
+#
+#   nvs      - Wi-Fi credentials / future settings storage
+#   phy_init - RF calibration data
+#   factory  - 4MB application partition: room for LVGL fonts, embedded image
+#              assets (C arrays) and the upcoming touch/network/API features
+#   (the remaining flash stays unallocated on purpose; add a storage partition
+#    here later if image assets ever move to a filesystem)
+#
+# Name,   Type, SubType, Offset,  Size, Flags
+nvs,      data, nvs,     ,        0x6000,
+phy_init, data, phy,     ,        0x1000,
+factory,  app,  factory, ,        4M,

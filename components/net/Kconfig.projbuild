@@ -1,0 +1,17 @@
+menu "Application"
+
+    config APP_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+        help
+            Wi-Fi network used for SNTP time synchronisation. Leave empty to run
+            without networking: the clock then shows RTC time only (or --:-- when
+            the RTC has never been set).
+
+    config APP_WIFI_PASSWORD
+        string "Wi-Fi password"
+        default ""
+        help
+            Wi-Fi password for APP_WIFI_SSID.
+
+endmenu
